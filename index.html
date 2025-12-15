@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Slider / Carousel</title>
+
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+    }
+
+    .images{
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      background: #000;
+    }
+    .slides{
+      display: flex;
+    }
+
+    .slide{
+      width: 100%;
+      display: none;
+    }
+
+    .slide.active{
+      display: block;
+    }
+
+    .prev, .next{
+      position: absolute;
+      top: 50%;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      border: none;
+      font-size: 22px;
+      padding: 10px 14px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .prev{ 
+        left: 10px; 
+    }
+    .next{ 
+        right: 10px;
+    }
+
+    .dots{
+      text-align: center;
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+    }
+
+    .dot{
+      height: 12px;
+      width: 12px;
+      margin: 0 4px;
+      background: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .dot.active{
+      background: #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="images">
+    <div class="slides">
+      <img src="/rohit1.jpg" alt="rohit" class="slide active">
+      <img src="/virat.jpg" alt="virat" class="slide">
+      <img src="/rohit2.webp" alt="India" class="slide">
+    </div>
+
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+
+    <div class="dots">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+
+  </div>
+  
+  <script>
+    var slides = document.getElementsByClassName("slide");
+    var dots = document.getElementsByClassName("dot");
+    var index = 0;
+
+    function showSlide(n) {
+      for (var i = 0; i < slides.length; i++) {
+        slides[i].className = "slide";
+      }
+
+      for (var i = 0; i < dots.length; i++) {
+        dots[i].className = "dot";
+      }
+
+      slides[n].className = "slide active";
+      dots[n].className = "dot active";
+    }
+
+    document.querySelector(".next").onclick = function () {
+      index++;
+      if (index >= slides.length) {
+        index = 0;
+      }
+      showSlide(index);
+    };
+
+    document.querySelector(".prev").onclick = function () {
+      index--;
+      if (index < 0) {
+        index = slides.length - 1;
+      }
+      showSlide(index);
+    };
+
+    for (var i = 0; i < dots.length; i++) {
+      (function (i) {
+        dots[i].onclick = function () {
+          index = i;
+          showSlide(index);
+        };
+      })(i);
+    }
+
+    setInterval(function () {
+      index++;
+      if (index >= slides.length) {
+        index = 0;
+      }
+      showSlide(index);
+    }, 3000);
+  </script>
+
+</body>
+</html>
